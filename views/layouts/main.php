@@ -36,7 +36,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Config', 'url' => ['/site/index']],
-            ['label' => 'Data', 'url' => ['/site/config']],
+            ['label' => 'Data', 'url' => ['/site/data']],
         ],
     ]);
     NavBar::end();

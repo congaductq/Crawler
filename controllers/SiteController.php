@@ -10,6 +10,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\data\ArrayDataProvider;
 use linslin\yii2\curl;
+use yii\base\UserException;
 
 class SiteController extends Controller
 {
@@ -62,37 +63,30 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $data["clearData"] = false;
-        $data["secondsBetweenRequest"] = 2;
-        $data["dbHost"] = "127.1.0.0";
-        $data["dbName"] = "Canh";
-        $data["dbPort"] = "3000";
-        $data["domains"]["1"] = true;
-        $data["domains"]["2"] = false;
-        $data["domains"]["3"] = false;
-        $data["domains"]["4"] = true;
-        $data["apartmentInfo"]["1"] = false;
-        $data["apartmentInfo"]["2"] = true;
-        $data["apartmentInfo"]["3"] = false;
-        $data["apartmentInfo"]["4"] = false;
-        $data["apartmentInfo"]["5"] = false;
-        $data["apartmentInfo"]["6"] = false;
-        $data["apartmentInfo"]["7"] = false;
-        $data["apartmentInfo"]["8"] = false;
-        $data["apartmentInfo"]["9"] = false;
-        $data["apartmentInfo"]["10"] = false;
-        $data["apartmentInfo"]["11"] = false;
-        $data["apartmentInfo"]["12"] = false;
-        $data["apartmentInfo"]["13"] = false;
-        $data["apartmentInfo"]["14"] = false;
-        $data["apartmentInfo"]["15"] = false;
-        $data["apartmentInfo"]["16"] = true;
-        $data["apartmentInfo"]["17"] = false;
+        $data = [];
+        $status = false;
+        $curl = new curl\Curl();
+        $response = $curl->get('http://localhost:3200/api/crawler/config');
+        if (!$response) {
+            throw new \yii\base\UserException('Can not connect to Server');
+        }
+        if ($curl->errorCode === null) {
+            $json = json_decode($response, true);
+            $status = $json["crawlerStatus"];;
+            $data = $json["crawlerConfig"];
+            if (isset($data["clearData"]) == true){
+                $data["clearData"] = true;
+            }
+            else {
+                $data["clearData"] = false;
+            }
+        }
+        
         return $this->render('index',
             [
                 'data' => $data,
+                'status' => $status,
             ]);
-
     }
 
     /**
@@ -100,38 +94,26 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionConfig()
+    public function actionData()
     {
         $curl = new curl\Curl();
+        $response = $curl->get('http://localhost:3200/api/apartments?');
 
-        $response = $curl->get('http://localhost:3200/api/apartments');
-
-        if ($curl->errorCode === null) {
-           return $response;
+        $allModels = [];
+        if ($curl->errorCode === null) { 
+            $allModels = json_decode($response, true);
         }
-        $allModels = [
+
+        $response = $curl->get('http://localhost:3200/api/crawler/config');
+
+        $config = [];
+        if ($curl->errorCode === null) {
+            $config = json_decode($response, true);
+        }
+        return $this->render('data',
             [
-                "title" => "ABC",
-                "area" => "My Dinh",
-            ],
-            [
-                "title" => "ABC2",
-                "area" => "My Dinh2",
-            ],
-            [
-                "title" => "ABC3",
-                "area" => "My Dinh3",
-            ],
-        ];
-        $dataProvider = new ArrayDataProvider([
-            "allModels" => $allModels,
-            'pagination' => [
-                'pageSize' => 2,
-            ],
-        ]);
-        return $this->render('config',
-            [
-                'dataProvider' => $dataProvider,
+                'items' => $allModels,
+                'config' => $config["crawlerConfig"]["apartmentInfo"],
             ]);
     }
 }

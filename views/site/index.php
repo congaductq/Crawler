@@ -7,9 +7,18 @@
     $this->title = 'Config';
 ?>
 
+<?php
+    if ($status == 0) {
+        echo '<input id="status" class="btn btn-danger" value="Stoped" disabled style="width: 80px;">';
+    } else {
+        echo '<input id="status" class="btn btn-success" value="Running" disabled style="width: 80px;">';
+    }
+?>
 <div align="left">
+    <br>
     <h1>Configuration</h1>
 </div>
+<br>
 
 <form name="start" method="POST" id="startForm">
 <div align="center">
@@ -53,10 +62,10 @@
                 <tr>
                     <td>
                         <?php 
-                            if ($data["clearData"] == true){
-                                echo '<input type="checkbox" name="clearData" id="1" checked>';
+                            if ($data["clearData"]){
+                                echo '<input type="checkbox" name="clearData" checked>';
                             } else {
-                                echo '<input type="checkbox" name="clearData" id="1">';
+                                echo '<input type="checkbox" name="clearData">';
                             }
                         ?>
                     </td>
@@ -129,7 +138,7 @@
         </td>
         <td style="display: inline-block;vertical-align: top;">
             <div class="tableTitle"><h3>Data</h3></div>
-            <div style="overflow-y: scroll; height:300px;">
+            <div style="overflow-y: scroll; height:320px;">
                 <table class="smallTable">
                     <tr>
                         <td>
@@ -383,20 +392,25 @@
 </form>
 
 <style>
-    #foo {
+    #status {
         position: fixed;
         bottom: 70px;
-        left: 20px;
-    }
-    #foo2 {
-        position: fixed;
-        bottom: 70px;
-        left: 100px;
+        right: 20px;
     }
     #foo3 {
         position: fixed;
-        bottom: 70px;
-        left: 220px;
+        top: 70px;
+        right: 20px;
+    }
+    #foo2 {
+        position: fixed;
+        top: 70px;
+        right: 100px;
+    }
+    #foo {
+        position: fixed;
+        top: 70px;
+        right: 220px;
     }
     .smallTable {
         font-size: 16px;
@@ -436,10 +450,18 @@
 
 <?php
 $script = <<< JS
+    var mes1 = "Crawler has been started";
+    var mes2 = "Oops, something went wrong";
     $(function(){
         $('form[name=start]').submit(function(){
         $.post($(this).attr('action'), $(this).serialize(), function(json) {
-            alert(json);
+            if (json["crawlerStatus"] == 1) {
+                document.getElementById("status").value = "Running";
+                document.getElementById("status").className = "btn btn-success";
+                alert(mes1);
+            } else {
+                alert(mes2);
+            }
         }, 'json');
         return false;
       });
@@ -447,18 +469,28 @@ $script = <<< JS
     $(function(){
         $('form[name=stop]').submit(function(){
         $.post($(this).attr('action'), $(this).serialize(), function(json) {
-            alert(json);
+            if (json["crawlerStatus"] == 0) {
+                document.getElementById("status").value = "Stopped";
+                document.getElementById("status").className = "btn btn-danger";
+                alert("Crawler has been stoped");
+            } else {
+                alert("Oops, something went wrong");
+            }
         }, 'json');
         return false;
       });
     }); 
     $('#btnStart').click(function(){
-        var form = document.getElementById("startForm")
+        var form = document.getElementById("startForm");
+        mes1 = "Crawler has been started";
+        mes2 = "Oops, something went wrong";
         form.action = "http://localhost:3200/api/crawler/start";
     });
 
     $('#btnConfig').click(function(){
-        var form = document.getElementById("startForm")
+        var form = document.getElementById("startForm");
+        mes1 = "Configurations have been saved";
+        mes2 = "Configurations have been saved";
         form.action = "http://localhost:3200/api/crawler/config";
     });
 JS;
