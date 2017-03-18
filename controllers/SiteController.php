@@ -145,7 +145,7 @@ class SiteController extends Controller
                 $images = $allModels[$i]["Images"];
                 $imagesString = "";
                 foreach ($images as $image) {
-                    $imagesString .= '<img src="'.$image.'" style="width:300px;"><br><br>';
+                    $imagesString .= '<a href="'.$image.'"><img src="'.$image.'" style="width:300px;"></a><br><br>';
                 }
                 $allModels[$i]["Images"] = $imagesString;
             }
