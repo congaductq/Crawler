@@ -161,7 +161,7 @@
 <div id="foo"><input type="submit" class="btn btn-success" value="Start" id="btnStart"></div>
 <div id="foo2"><input type="submit" class="btn btn-info" value="Save config" id="btnConfig"></div>
 </form>
-<form name="stop" method="POST" action="http://localhost:3200/api/crawler/stop">
+<form name="stop" method="POST" action="http://52.32.158.240:3200/api/crawler/stop">
     <div id="foo3"><input type="submit" class="btn btn-danger" value="Stop"></div>
 </form>
 
@@ -261,14 +261,14 @@ $script = <<< JS
         var form = document.getElementById("startForm");
         mes1 = "Crawler has been started";
         mes2 = "Oops, something went wrong";
-        form.action = "http://localhost:3200/api/crawler/start";
+        form.action = "http://52.32.158.240:3200/api/crawler/start";
     });
 
     $('#btnConfig').click(function(){
         var form = document.getElementById("startForm");
         mes1 = "Configurations have been saved";
         mes2 = "Configurations have been saved";
-        form.action = "http://localhost:3200/api/crawler/config";
+        form.action = "http://52.32.158.240:3200/api/crawler/config";
     });
 JS;
 $this->registerJs($script);
