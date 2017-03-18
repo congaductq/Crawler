@@ -63,6 +63,24 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $configName = [];
+        $configName[17] = 'Title';
+        $configName[16] = 'District';
+        $configName[15] = 'City';
+        $configName[14] = 'Images';
+        $configName[13] = 'Price';
+        $configName[12] = 'PricePerMetreSquare';
+        $configName[11] = 'Description';
+        $configName[10] = 'Environment';
+        $configName[9] = 'Utilities';
+        $configName[8] = 'Floor';
+        $configName[7] = 'Project';
+        $configName[6] = 'NumberOfBathrooms';
+        $configName[5] = 'NumberOfBedrooms';
+        $configName[4] = 'Direction';
+        $configName[3] = 'Address';
+        $configName[2] = 'Area';
+        $configName[1] = 'RoomNumber';
         $data = [];
         $status = false;
         $curl = new curl\Curl();
@@ -86,6 +104,7 @@ class SiteController extends Controller
             [
                 'data' => $data,
                 'status' => $status,
+                'configName' => $configName,
             ]);
     }
 
@@ -96,6 +115,24 @@ class SiteController extends Controller
      */
     public function actionData()
     {
+        $configName = [];
+        $configName[17] = 'Title';
+        $configName[16] = 'District';
+        $configName[15] = 'City';
+        $configName[14] = 'Images';
+        $configName[13] = 'Price';
+        $configName[12] = 'PricePerMetreSquare';
+        $configName[11] = 'Description';
+        $configName[10] = 'Environment';
+        $configName[9] = 'Utilities';
+        $configName[8] = 'Floor';
+        $configName[7] = 'Project';
+        $configName[6] = 'NumberOfBathrooms';
+        $configName[5] = 'NumberOfBedrooms';
+        $configName[4] = 'Direction';
+        $configName[3] = 'Address';
+        $configName[2] = 'Area';
+        $configName[1] = 'RoomNumber';
         $curl = new curl\Curl();
         $response = $curl->get('http://localhost:3200/api/apartments/all');
 
@@ -114,6 +151,7 @@ class SiteController extends Controller
             [
                 'items' => $allModels,
                 'config' => $config["crawlerConfig"]["apartmentInfo"],
+                'configName' => $configName,
             ]);
     }
 }

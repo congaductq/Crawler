@@ -13,23 +13,7 @@ for ($i=1; $i<=17; $i++){
 $configArray = [];
 for ($i = 17; $i>=1; $i--) {
     if ($config[$i] == true){
-        if ($i == 17) $configArray[] = 'Title';
-        if ($i == 16) $configArray[] = 'District';
-        if ($i == 15) $configArray[] = 'City';
-        if ($i == 14) $configArray[] = 'Images';
-        if ($i == 13) $configArray[] = 'Price';
-        if ($i == 12) $configArray[] = 'PricePerMetreSquare';
-        if ($i == 11) $configArray[] = 'Description';
-        if ($i == 10) $configArray[] = 'Environment';
-        if ($i == 9) $configArray[] = 'Utilities';
-        if ($i == 8) $configArray[] = 'Floor';
-        if ($i == 7) $configArray[] = 'Project';
-        if ($i == 6) $configArray[] = 'NumberOfBathrooms';
-        if ($i == 5) $configArray[] = 'NumberOfBedrooms';
-        if ($i == 4) $configArray[] = 'Direction';
-        if ($i == 3) $configArray[] = 'Address';
-        if ($i == 2) $configArray[] = 'Area';
-        if ($i == 1) $configArray[] = 'RoomNumber';
+        $configArray[] = $configName[$i];
     }
 }
 $searchAttributes = $configArray;
