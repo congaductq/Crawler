@@ -140,6 +140,16 @@ class SiteController extends Controller
         if ($curl->errorCode === null) { 
             $allModels = json_decode($response, true);
         }
+        for ($i=0; $i<count($allModels); $i++) {
+            if (isset($allModels[$i]["Images"])){
+                $images = $allModels[$i]["Images"];
+                $imagesString = "";
+                foreach ($images as $image) {
+                    $imagesString .= '<img src="'.$image.'" style="width:300px;"><br><br>';
+                }
+                $allModels[$i]["Images"] = $imagesString;
+            }
+        }
 
         $response = $curl->get('http://localhost:3200/api/crawler/config');
 
