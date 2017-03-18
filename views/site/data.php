@@ -19,6 +19,7 @@ for ($i = 17; $i>=1; $i--) {
 $searchAttributes = $configArray;
 $searchModel = [];
 $searchColumns = [];
+$searchColumns[] = ['class' => 'yii\grid\SerialColumn'];
 
 foreach ($searchAttributes as $searchAttribute) {
     $filterName = 'filter' . $searchAttribute;
@@ -53,7 +54,7 @@ foreach ($searchAttributes as $searchAttribute) {
                 'attributes' => $searchAttributes,
             ],
                 'pagination' => [
-                        'pageSize' => 20,
+                        'pageSize' => 10,
                 ],
             ]),
         'filterModel' => $searchModel,
