@@ -218,9 +218,6 @@
         font-weight: normal !important;
     }
 </style>
-<link rel="stylesheet" href="jAlert-master/dist/jAlert.css">
-<script src="jAlert-master/dist/jAlert.min.js"></script>
-<script src="jAlert-master/dist/jAlert-functions.min.js"></script> <!-- COMPLETELY OPTIONAL -->
 
 <?php
 $script = <<< JS
@@ -236,13 +233,16 @@ $script = <<< JS
             } else {
                 alert(mes2);
             }
-        }, 'json');
+        }, 'json').fail(function(err) {
+            var response = JSON.parse(err.responseText);
+            alert(err.statusText + ' - ' + response.error);
+        });
         return false;
       });
     }); 
     $(function(){
         $('form[name=stop]').submit(function(){
-        $.post($(this).attr('action'), $(this).serialize(), function(json) {
+        $.post($(this).attr('action'), $(this).serialize(), function(json, textStatus) {
             if (json["crawlerStatus"] == 0) {
                 document.getElementById("status").value = "Stopped";
                 document.getElementById("status").className = "btn btn-danger";
@@ -250,7 +250,10 @@ $script = <<< JS
             } else {
                 alert("Oops, something went wrong");
             }
-        }, 'json');
+        }, 'json').fail(function(err) {
+            var response = JSON.parse(err.responseText);
+            alert(err.statusText + ' - ' + response.error);
+        });
         return false;
       });
     }); 

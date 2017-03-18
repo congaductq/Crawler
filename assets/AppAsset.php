@@ -19,11 +19,14 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'jAlert/dist/jAlert.css',
     ];
     public $js = [
+        'jAlert/dist/jAlert.min.js',
+        'jAlert/dist/jAlert-functions.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapAsset'
     ];
 }
