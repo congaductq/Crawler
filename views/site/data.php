@@ -58,13 +58,17 @@ foreach ($searchAttributes as $searchAttribute) {
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <?= GridView::widget([
+        'pager' => [
+            'firstPageLabel' => 'First',
+            'lastPageLabel'  => 'Last'
+        ],
         'dataProvider' => new ArrayDataProvider([
             'allModels' => $items,
             'sort' => [
                 'attributes' => $searchAttributes,
             ],
                 'pagination' => [
-                        'pageSize' => 5,
+                        'pageSize' => 20,
                 ],
             ]),
         'filterModel' => $searchModel,

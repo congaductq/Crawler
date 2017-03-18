@@ -97,7 +97,7 @@ class SiteController extends Controller
     public function actionData()
     {
         $curl = new curl\Curl();
-        $response = $curl->get('http://localhost:3200/api/apartments?');
+        $response = $curl->get('http://localhost:3200/api/apartments/all');
 
         $allModels = [];
         if ($curl->errorCode === null) { 
