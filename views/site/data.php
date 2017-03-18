@@ -28,6 +28,7 @@ foreach ($searchAttributes as $searchAttribute) {
         'attribute' => $searchAttribute,
         'filter' => '<input class="form-control" name="' . $filterName . '" value="' . $filterValue . '" type="text">',
         'value' => $searchAttribute,
+        'format' => 'raw',
     ];
     $items = array_filter($items, function($item) use (&$filterValue, &$searchAttribute) {
         return strlen($filterValue) > 0 ? stripos('/^' . strtolower($item[$searchAttribute]) . '/', strtolower($filterValue)) : true;
