@@ -49,7 +49,7 @@
     "url": "https://github.com/VersatilityWerks/jAlert/issues"
   },
   "dependencies": {
-    "jquery": "^1.7.1"
+    "jquery": "^3.5.0"
   },
   "description": "Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin",
   "devDependencies": {},
